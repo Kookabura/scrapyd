@@ -121,6 +121,7 @@ class ListJobs(WsResource):
         running = [{"id": s.job, "spider": s.spider, "pid": s.pid,
                     "start_time": s.start_time.isoformat(' ')}
                    for s in spiders if s.project == project]
+        self.root.poller.update_projects()
         queue = self.root.poller.queues[project]
         pending = [{"id": x["_job"], "spider": x["name"]} for x in queue.list()]
         finished = [{"id": s.job, "spider": s.spider,
